@@ -50,4 +50,15 @@ class Board {
             }
         }
     }
+    
+    // checks if a board position given is valid or not
+    // The pos is invalid if any of the arguments are non integers
+    // Board postions are bounded between 0 and row - 1, col - 1
+    isValidBoardPos(_x, _y) {
+        if (Number.isInteger(_x) && Number.isInteger(_y)) {
+            return !(_x < 0 || _x >= this.cols || _y < 0 || _y >= this.rows);
+        }
+        
+        return false;
+    }
 }
