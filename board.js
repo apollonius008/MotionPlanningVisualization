@@ -1,51 +1,53 @@
 "use strict";
-import {Point} from "./cell.js"
 /*
 A class for board object
 */
 class Board {
 
     constructor(screenWidth, screenHeight, cellWidth, cellHeight) {
-        if (Number.isNaN(screenWidth)) {
+        // All of the input arguments should be integers
+        // Checking if they are integers
+        if (!Number.isInteger(screenWidth)) {
             console.error('screenWidth not a number. Value :', screenWidth, 'Type :', typeof(screenWidth));
         }
-        if (Number.isNaN(screenHeight)) {
+        if (Number.isInteger(screenHeight)) {
             console.error('screenHeight not a number. Value :', screenHeight, 'Type :', typeof(screenHeight));
         }
-        if (Number.isNaN(cellWidth)) {
+        //additionally cellWidth and cellHeight cannot be zero
+        // This also checks for division by zero erroir
+        if (Number.isInteger(cellWidth) && cellWidth == 0) {
             console.error('cellWidth not a number. Value :', cellWidth, 'Type :', typeof(cellWidth));
         }
-        if (Number.isNaN(cellHeight)) {
+        if (Number.isInteger(cellHeight) && cellHeight == 0) {
             console.error('cellHeight not a number. Value :', cellHeight, 'Type :', typeof(cellHeight));
         }
 
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
+        
+        //calculates the no of rows and columns from screenWidth, cellWidth, screenHeight and cellHeight
         this.rows = Math.floor(screenHeight / cellHeight);
         this.cols = Math.floor(screenWidth / cellWidth);
-        this.startingPos = null;
-        this.endingPos = null;
-        this.obstacleList = [];
-    }
-    
-    setStartingPosition(_x, _y) {
-        this.startingPos = new Point(_x, _y);
-    }
-    
-    setEndingPosition(_x, _y) {
-        this.endingPos = new Point(_x, _y);
-    }
-    
-    addObstacle(_x, _y) {
-        const p = new Point(_x, _y);
-        // if the obstacle is already in list no need to add it
-        // The for loop checks if the point is in list
-        for (let i = 0; i < this.obstacleList.length; i++) {
-            if (p.equal(this.obstacleList[i]))
-                return;
-        }
         
-        // if the point is not in list add it to list
-        this.obstacleList.push(p);
+        // a mapping which contains the map from state(int) to color
+        // A array is used for mapping
+        // index represents the state number and the value represents the color for the state
+        // 0 -> Blank state, 1 -> Obstacle, 2 -> starting Pos, 3 -> Ending Pos
+        this.stateColor = [color('rgba(0, 0, 0, 0)'), color( 'rgba(255, 255, 255, 0)'), color('rgba(255, 0, 0, 0)' ), color( 'rgba(0, 255, 0, 0)')];
+        
+        //remembering the number of every board state is hard so these variables are used
+        this.STATE_BLANK = 0;
+        this.STATE_BLOCK = 1;
+        this.STATE_START = 2;
+        this.STATE_END = 3;
+
+        // a flattened 2D array containing board state for all board positions
+        // initializing all positions with 0 i.e. blank state
+        this.boardState = [];
+        for (let y = 0; y < this.rows; y++) {
+            for (let x = 0; x < this.cols; x++) {
+                this.boardState[y * this.cols + x] = this.STATE_BLANK;
+            }
+        }
     }
 }
