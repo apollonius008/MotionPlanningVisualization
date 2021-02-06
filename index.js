@@ -1,3 +1,4 @@
+"use strict";
 let canvas;
 const boxSize = 10;
 
