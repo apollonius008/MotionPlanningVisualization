@@ -62,6 +62,14 @@ class Board {
         return false;
     }
     
+    isValidState(state) {
+        if (Number.isInteger(state)) {
+            return !(state < 0 || state >= this.stateColor.length)
+        }
+        
+        return false;
+    }
+    
     // the given position is changed to starting position
     setStartingPoint(_x, _y) {
         if (this.isValidBoardPos(_x, _y)) {
@@ -97,6 +105,23 @@ class Board {
         else {
             console.error("(", _x, ',', _y, 'is a invalid board position');
         }
+    }
+    
+    addState(myStateColor) {
+        if (myStateColor.constructor == color) {
+            this.stateColor.push(myStateColor);
+            return;
+        }
+        
+        console.error(myStateColor, 'not of type color');
+    }
+    
+    changeStateColor(state, myColor) {
+        if (this.isValidState(state) && myColor.constructor == color) {
+            this.stateColor();
+        }
+        
+        console.error("Error in arguments", state, myColor);
     }
     
 }
