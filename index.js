@@ -13,8 +13,3 @@ function draw() {
 window.onresize = () => {
     resizeCanvas(window.innerWidth, window.innerHeight);
 };
-
-const drawBoard = (_boxSize, _width, _height, _color) => {
-    stroke(_color);
-    strokeWeight(4);
-};
