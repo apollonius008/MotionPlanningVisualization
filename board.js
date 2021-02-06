@@ -61,4 +61,42 @@ class Board {
         
         return false;
     }
+    
+    // the given position is changed to starting position
+    setStartingPoint(_x, _y) {
+        if (this.isValidBoardPos(_x, _y)) {
+            this.boardState[_y * this.cols + x] = this.STATE_START;
+        }
+        else {
+            console.error("(", _x, ',', _y, ') is a invalid board position');
+        }
+    }
+    
+    setEndingPoint(_x, _y) {
+        if (this.isValidBoardPos(_x, _y)) {
+            this.boardState[_y * this.cols + x] = this.STATE_END;
+        }
+        else {
+            console.error("(", _x, ',', _y, 'is a invalid board position');
+        }
+    }
+    
+    addObstacle(_x, _y) {
+        if (this.isValidBoardPos(_x, _y)) {
+            this.boardState[_y * this.cols + x] = this.STATE_BLOCK;
+        }
+        else {
+            console.error("(", _x, ',', _y, 'is a invalid board position');
+        }
+    }
+    
+    removeObstacle(_x, _y) {
+        if (this.isValidBoardPos(_x, _y)) {
+            this.boardState[_y * this.cols + x] = this.STATE_BLANK;
+        }
+        else {
+            console.error("(", _x, ',', _y, 'is a invalid board position');
+        }
+    }
+    
 }
