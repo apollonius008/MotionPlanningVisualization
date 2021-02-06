@@ -7,10 +7,10 @@ class Board {
     constructor(screenWidth, screenHeight, cellWidth, cellHeight) {
         // All of the input arguments should be integers
         // Checking if they are integers
-        if (!Number.isInteger(screenWidth)) {
+        if (!Number.isInteger(screenWidth) && screenWidth < 0) {
             console.error('screenWidth not a number. Value :', screenWidth, 'Type :', typeof(screenWidth));
         }
-        if (Number.isInteger(screenHeight)) {
+        if (Number.isInteger(screenHeight) && screenHeight < 0) {
             console.error('screenHeight not a number. Value :', screenHeight, 'Type :', typeof(screenHeight));
         }
         //additionally cellWidth and cellHeight cannot be zero
@@ -122,6 +122,29 @@ class Board {
         }
         
         console.error("Error in arguments", state, myColor);
+    }
+    
+    getBoardState(_x, _y) {
+        if (this.isValidBoardPos(_x, _y)) {
+            return this.boardState[_y * this.cols + _x];
+        }
+        
+        console.error("(", _x, ',', _y, ") Invalid board position")
+        return;
+    }
+    
+    setBoardState(_x, _y, state) {
+        if (!this.isValidBoardPos(_x, _y)) {
+            console.error("(", _x, ',', _y, ") Invalid board position")
+            return;
+        }
+        
+        if (!this.isValidState(state)) {
+            console.error(state, 'Invalid boardState');
+            return;
+        }
+        
+        this.boardState[_y * this.cols + _x];
     }
     
 }
