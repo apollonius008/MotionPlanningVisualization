@@ -64,7 +64,7 @@ class Board {
     
     isValidState(state) {
         if (Number.isInteger(state)) {
-            return !(state < 0 || state >= this.stateColor.length)
+            return !(state < 0 || state >= this.stateColor.length);
         }
         
         return false;
@@ -129,13 +129,13 @@ class Board {
             return this.boardState[_y * this.cols + _x];
         }
         
-        console.error("(", _x, ',', _y, ") Invalid board position")
+        console.error("(", _x, ',', _y, ") Invalid board position");
         return;
     }
     
     setBoardState(_x, _y, state) {
         if (!this.isValidBoardPos(_x, _y)) {
-            console.error("(", _x, ',', _y, ") Invalid board position")
+            console.error("(", _x, ',', _y, ") Invalid board position");
             return;
         }
         
@@ -146,5 +146,30 @@ class Board {
         
         this.boardState[_y * this.cols + _x];
     }
+    
+    drawBoard(strokeColor) {
+        stroke(strokeColor);
+        strokeWeight(2);
+
+        const screenWidth = this.cols * this.cellWidth;
+        const screenHeight = this.rows * this.cellHeight;
+
+        for (let i = 0; i <= this.cols; i++) {
+            line(i * this.cellWidth, 0, i * this.cellWidth, screenHeight);
+        }
+        for (let i = 0; i <= this.rows; i++) {
+            line(i * this.cellWidth, 0, i * this.cellWidth, screenWidth);
+        }
+        
+        for (let y = 0; y < this.rows; y++) {
+            for (let x = 0; x < this.cols; x++) {
+                fill(this.stateColor[this.boardState[y * this.cols + x]]);
+                rect(x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight);
+            }
+        }
+        
+        noFill();
+    }
+    
     
 }
