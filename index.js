@@ -1,7 +1,7 @@
 "use strict";
 
 let canvas;
-const boxSize = 15;
+const boxSize = 30;
 let board;
 
 // UI ELEMENTS
@@ -13,6 +13,15 @@ visualizeBtn, resetBtn;
 let ui_state;
 
 let chosenAlgo = null;
+let solver = null;
+let startingX, startingY;
+let endingX, endingY;
+
+const timeStep = 0;
+let timeDeposit = 0;
+let iterator;
+
+let pmouseCellX, pmouseCellY;
 
 function setup() {
     canvas = createCanvas(window.innerWidth, window.innerHeight);
@@ -29,7 +38,8 @@ function setup() {
 
 function draw() {
     background(255);
-    board.drawBoard(color(0));
+    board.drawBoard(color(255));
+    // console.log(mouseX, mouseY);
     
     if (ui_state == "edit env") {
         customEnviromentCreation();
@@ -39,6 +49,19 @@ function draw() {
     }
     else if (ui_state == "select end") {
         selectEndPosition();
+    }
+    else if (ui_state == "running") {
+        if (timeDeposit >= timeStep) {
+            iterator.next();
+            timeDeposit -= timeStep;
+            
+            if (solver.solved) {
+                ui_state = "done";
+            }
+        }
+        else {
+            timeDeposit += deltaTime;
+        }
     }
 }
 
@@ -88,11 +111,23 @@ function initializeUI() {
     endBtn.attribute('disabled', '');
     endBtn.mouseClicked(() => {
         ui_state = "select end";
+        endBtn.attribute('disabled', '');
     });
 
     visualizeBtn.attribute('disabled', '');
     visualizeBtn.mouseClicked(() => {
-        ui_state = "running algo";
+
+        if (chosenAlgo == "Dijkstra Shortest Path") {
+            visualizeBtn.attribute('disabled', '');
+            solver = new DijkstraSolver(board, startingX, startingY, endingX, endingY);
+            iterator = solver.solve(startingX, startingY);
+        }
+        else if(chosenAlgo == "A* Search") {
+            visualizeBtn.attribute('disabled', '');
+        }
+        ui_state = "running";
+        
+        iterator.next();
     });
 
     dijkstraOption.mouseClicked(() => {
@@ -129,11 +164,20 @@ function customEnviromentCreation() {
     const mouseCellY = Math.floor(mouseY / board.cellHeight);
     
     if (mouseIsPressed) {
-        if (board.getBoardState(mouseCellX, mouseCellY) == board.STATE_BLANK) {
-            board.addObstacle(mouseCellX, mouseCellY);
-        }
-        else {
-            board.removeObstacle(mouseCellX, mouseCellX);
+        console.log(mouseCellX, mouseCellY, pmouseCellX, pmouseCellY);
+        if (mouseCellX != pmouseCellX || mouseCellY != pmouseCellY) {
+            
+            if (board.getBoardState(mouseCellX, mouseCellY) == board.STATE_BLANK) {
+                board.addObstacle(mouseCellX, mouseCellY);
+                // console.log(mouseX, mouseY);
+            }
+            else {
+                board.removeObstacle(mouseCellX, mouseCellY);
+                // console.log(mouseX, mouseY);
+            }
+            
+            pmouseCellX = mouseCellX;
+            pmouseCellY = mouseCellY;
         }
     }
     else{
@@ -153,6 +197,8 @@ function selectStartPosition() {
         board.setStartingPoint(mouseCellX, mouseCellY);
         ui_state = "selected start";
         endBtn.removeAttribute('disabled');
+        startingX = mouseCellX;
+        startingY = mouseCellY;
     }
     else{
         fill(color(150, 0, 0, 150));
@@ -170,6 +216,9 @@ function selectEndPosition() {
     if (mouseIsPressed) {
         board.setEndingPoint(mouseCellX, mouseCellY);
         ui_state = "full env set";
+
+        endingX = mouseCellX;
+        endingY = mouseCellY;
         
         if (chosenAlgo != null) {
             visualizeBtn.removeAttribute('disabled');

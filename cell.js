@@ -8,23 +8,12 @@
 export class Point{
 
     constructor(_x, _y) {
-        if (Number.isInteger(_x)) {
-            this.x = _x;
-        }
-        else{
-            console.error("_x is not a Integer. Value :", _x, "Type :", typeof(x));
-        }
-        
-        if (Number.isInteger(_y)) {
-            this.y = _y;
-        }
-        else{
-            console.error("_y is not an integer. Value :", _y, "Type :", typeof(_y));
-        }
+        this.x = x;
+        this.y = y;
     }
     
     equal(p) {
-        if (p.constructor.name === "Point") {
+        if (p.constructor === Point) {
             return (p.x == this.x && p.y == this.y);
         }
         
