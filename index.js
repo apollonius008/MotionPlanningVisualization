@@ -91,6 +91,9 @@ function initializeUI() {
     });
 
     visualizeBtn.attribute('disabled', '');
+    visualizeBtn.mouseClicked(() => {
+        ui_state = "running algo";
+    });
 
     dijkstraOption.mouseClicked(() => {
         chosenAlgo = "Dijkstra Shortest Path";
