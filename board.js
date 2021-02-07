@@ -108,7 +108,7 @@ class Board {
     }
     
     addState(myStateColor) {
-        if (myStateColor.constructor == color) {
+        if (myStateColor.constructor == p5.Color) {
             this.stateColor.push(myStateColor);
             return;
         }
