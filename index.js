@@ -15,7 +15,7 @@ function setup() {
 
 function draw() {
     background(255);
-    board.drawBoard(color(0));
+    //board.drawBoard(color(0));
 }
 
 
