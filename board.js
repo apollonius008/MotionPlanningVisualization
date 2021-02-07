@@ -33,7 +33,7 @@ class Board {
         // A array is used for mapping
         // index represents the state number and the value represents the color for the state
         // 0 -> Blank state, 1 -> Obstacle, 2 -> starting Pos, 3 -> Ending Pos
-        this.stateColor = [color('rgba(0, 0, 0, 0)'), color( 'rgba(255, 255, 255, 0)'), color('rgba(255, 0, 0, 0)' ), color( 'rgba(0, 255, 0, 0)')];
+        this.stateColor = [color('rgba(255, 255, 255, 255)'), color( 'rgba(0, 0, 0, 150)'), color('rgba(255, 0, 0, 255)' ), color( 'rgba(0, 255, 0, 255)')];
         
         //remembering the number of every board state is hard so these variables are used
         this.STATE_BLANK = 0;
@@ -91,7 +91,7 @@ class Board {
     
     addObstacle(_x, _y) {
         if (this.isValidBoardPos(_x, _y)) {
-            this.boardState[_y * this.cols + x] = this.STATE_BLOCK;
+            this.boardState[_y * this.cols + _x] = this.STATE_BLOCK;
         }
         else {
             console.error("(", _x, ',', _y, 'is a invalid board position');
@@ -100,7 +100,7 @@ class Board {
     
     removeObstacle(_x, _y) {
         if (this.isValidBoardPos(_x, _y)) {
-            this.boardState[_y * this.cols + x] = this.STATE_BLANK;
+            this.boardState[_y * this.cols + _x] = this.STATE_BLANK;
         }
         else {
             console.error("(", _x, ',', _y, 'is a invalid board position');
