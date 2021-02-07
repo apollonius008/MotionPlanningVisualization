@@ -4,6 +4,12 @@ let canvas;
 const boxSize = 15;
 let board;
 
+// UI ELEMENTS
+let customOption, randomOption,
+editDoneBtn, startBtn, endBtn,
+dijkstraOption, aStarOption,
+visualizeBtn, resetBtn;
+
 function setup() {
     canvas = createCanvas(window.innerWidth, window.innerHeight);
     canvas.parent('#canvas-window');
@@ -11,6 +17,8 @@ function setup() {
     window.onresize = () => {
         resizeCanvas(window.innerWidth, window.innerHeight);
     };
+    
+    
 }
 
 function draw() {
