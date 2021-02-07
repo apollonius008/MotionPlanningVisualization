@@ -73,7 +73,7 @@ class Board {
     // the given position is changed to starting position
     setStartingPoint(_x, _y) {
         if (this.isValidBoardPos(_x, _y)) {
-            this.boardState[_y * this.cols + x] = this.STATE_START;
+            this.boardState[_y * this.cols + _x] = this.STATE_START;
         }
         else {
             console.error("(", _x, ',', _y, ') is a invalid board position');
@@ -82,7 +82,7 @@ class Board {
     
     setEndingPoint(_x, _y) {
         if (this.isValidBoardPos(_x, _y)) {
-            this.boardState[_y * this.cols + x] = this.STATE_END;
+            this.boardState[_y * this.cols + _x] = this.STATE_END;
         }
         else {
             console.error("(", _x, ',', _y, 'is a invalid board position');
@@ -117,8 +117,9 @@ class Board {
     }
     
     changeStateColor(state, myColor) {
-        if (this.isValidState(state) && myColor.constructor == color) {
-            this.stateColor();
+        if (this.isValidState(state) && p5.Color === myColor.constructor) {
+            this.stateColor[state] = myColor;
+            return;
         }
         
         console.error("Error in arguments", state, myColor);
@@ -144,7 +145,7 @@ class Board {
             return;
         }
         
-        this.boardState[_y * this.cols + _x];
+        this.boardState[_y * this.cols + _x] = state;
     }
     
     drawBoard(strokeColor) {
@@ -167,9 +168,8 @@ class Board {
                 rect(x * this.cellWidth, y * this.cellHeight, this.cellWidth, this.cellHeight);
             }
         }
-        
         noFill();
     }
     
     
-}
+};
