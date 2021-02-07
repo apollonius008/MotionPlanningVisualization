@@ -110,7 +110,7 @@ class Board {
     addState(myStateColor) {
         if (myStateColor.constructor == p5.Color) {
             this.stateColor.push(myStateColor);
-            return;
+            return this.stateColor.length - 1;
         }
         
         console.error(myStateColor, 'not of type color');
@@ -169,7 +169,14 @@ class Board {
             }
         }
         noFill();
-    }
+   }
     
+   initRandomBoardState() {
+       for (let y = 0; y < this.rows; y++) {
+           for (let x = 0; x < this.cols; x++) {
+               this.setBoardState(x, y, Math.floor(Math.random() * 2));
+           }
+       }
+   }
     
 };
