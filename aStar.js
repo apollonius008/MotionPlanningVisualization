@@ -83,10 +83,10 @@ class AStar {
                 const index = cellY * this.board.cols + cellX;
                 cellX = this.parentCellX[index];
                 cellY = this.parentCellY[index];
-                
-                this.solved = true;
+                yield;
             }
             
+            this.solved = true;
             yield;
         }
        
