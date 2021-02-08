@@ -124,6 +124,8 @@ function initializeUI() {
         }
         else if(chosenAlgo == "A* Search") {
             visualizeBtn.attribute('disabled', '');
+            solver = new AStar(board, startingX, startingY, endingX, endingY);
+            iterator = solver.solve(startingX, startingY);
         }
         ui_state = "running";
         
